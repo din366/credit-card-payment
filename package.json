@@ -1,0 +1,16 @@
+{
+  "name": "credit-card-data-form",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "inputmask": "^5.0.7",
+    "redom": "^3.27.1"
+  }
+}
