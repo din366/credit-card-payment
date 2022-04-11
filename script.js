@@ -1,4 +1,4 @@
-import { init } from "./module/renderPage";
+import { init } from "./module/renderPage.js";
 import { eventListeners } from "./module/listeners.js";
 
 init();
