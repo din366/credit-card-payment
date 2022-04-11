@@ -538,10 +538,7 @@ const securitycode = document.getElementById('securitycode');
 const lightcolor = document.querySelectorAll('.lightcolor');
 const darkcolor = document.querySelectorAll('.darkcolor');
 const creditcard = document.querySelector('.creditcard');
-_listenersJs.eventListeners(); // Что-бы перевернуть карту используйте класс flipped для элемента с классом creditcard
- // данные для определения типа карты
- // для вставки логотипа и иконки уже полученны элементы выше ccicon и cclogo
- // смена цвета у карточки
+_listenersJs.eventListeners();
 
 },{"./module/renderPage.js":"bShC7","./module/listeners.js":"hImbd","@parcel/transformer-js/src/esmodule-helpers.js":"cxhdc"}],"bShC7":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -1135,7 +1132,6 @@ parcelHelpers.export(exports, "cardFrontSvg", ()=>cardFrontSvg
 );
 parcelHelpers.export(exports, "cardBackSvg", ()=>cardBackSvg
 );
-var _redom = require("redom");
 let cardFrontSvg = `<svg version="1.1" id="cardfront" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
           x="0px" y="0px" viewBox="0 0 750 471" style="enable-background:new 0 0 750 471;" xml:space="preserve">
           <g id="Front">
@@ -1229,7 +1225,7 @@ let cardBackSvg = `<svg version="1.1" id="cardback" xmlns="http://www.w3.org/200
           </g>
         </svg>`;
 
-},{"redom":"iahd6","@parcel/transformer-js/src/esmodule-helpers.js":"cxhdc"}],"hImbd":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"cxhdc"}],"hImbd":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "eventListeners", ()=>eventListeners
@@ -1259,7 +1255,7 @@ const eventListeners = ()=>{
     const BackCardCvv = document.querySelector('#svgsecurity');
     const backCardName = document.querySelector('#svgnameback');
     const ccicon = document.querySelector('.ccicon');
-    /* const cclogo = document.getElementById('cclogo'); */ const backCardForLogo = document.querySelector('#Back');
+    const backCardForLogo = document.querySelector('#Back');
     backCardForLogo.style = 'transform:translate3d(400px, 50px, 0px);';
     const dateMask = new _inputmaskDefault.default('99/99'); // mask for date
     _scriptJs.name.addEventListener('input', (e)=>{

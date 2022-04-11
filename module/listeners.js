@@ -28,7 +28,6 @@ export const eventListeners = () => {
   const backCardName = document.querySelector('#svgnameback');
 
   const ccicon = document.querySelector('.ccicon');
-  /* const cclogo = document.getElementById('cclogo'); */
 
   const backCardForLogo = document.querySelector('#Back');
   backCardForLogo.style = 'transform:translate3d(400px, 50px, 0px);'
