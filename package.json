@@ -12,5 +12,12 @@
   "dependencies": {
     "inputmask": "^5.0.7",
     "redom": "^3.27.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.12",
+    "@babel/preset-env": "^7.17.12",
+    "babel-jest": "^28.1.0",
+    "cypress": "^9.6.1",
+    "jest": "^28.1.0"
   }
 }

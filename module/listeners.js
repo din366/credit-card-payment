@@ -1,6 +1,7 @@
 import { name, cardnumber, expirationdate, securitycode, lightcolor, darkcolor} from "../script.js"
 import { mask } from "./maskData.js";
 import Inputmask from 'inputmask';
+import { validateFormMainFunc } from "./validate.js";
 
 const renderSvgIcon = (innerSvg) => {
   return `<svg id="ccicon" class="ccicon" width="750" height="471" viewBox="0 0 750 471" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -91,4 +92,10 @@ export const eventListeners = () => {
       container.querySelector('.creditcard').classList.toggle('flipped');
     }
   })
+
+  /* validate button */
+
+  document.querySelector('#validate-button').addEventListener('click', (e) => {
+    validateFormMainFunc('validate-result', 'validate-result-text', { name, cardnumber, expirationdate, securitycode});
+  });
 }

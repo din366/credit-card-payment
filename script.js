@@ -12,9 +12,3 @@ export const darkcolor = document.querySelectorAll('.darkcolor');
 const creditcard = document.querySelector('.creditcard');
 
 eventListeners();
-
-
-
-
-
-

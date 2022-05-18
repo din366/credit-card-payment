@@ -142,7 +142,7 @@
       this[globalName] = mainExports;
     }
   }
-})({"aeQIJ":[function(require,module,exports) {
+})({"dJvvM":[function(require,module,exports) {
 "use strict";
 var HMR_HOST = null;
 var HMR_PORT = null;
@@ -223,7 +223,7 @@ function _arrayLikeToArray(arr, len) {
     for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
     return arr2;
 }
-/* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE */ /*::
+/* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser */ /*::
 import type {
   HMRAsset,
   HMRMessage,
@@ -250,11 +250,18 @@ interface ParcelModule {
     _disposeCallbacks: Array<(mixed) => void>,
   |};
 }
+interface ExtensionContext {
+  runtime: {|
+    reload(): void,
+  |};
+}
 declare var module: {bundle: ParcelRequire, ...};
 declare var HMR_HOST: string;
 declare var HMR_PORT: string;
 declare var HMR_ENV_HASH: string;
 declare var HMR_SECURE: boolean;
+declare var chrome: ExtensionContext;
+declare var browser: ExtensionContext;
 */ var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
 function Module(moduleName) {
@@ -309,7 +316,12 @@ if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
                     var id = assetsToAccept[i][1];
                     if (!acceptedAssets[id]) hmrAcceptRun(assetsToAccept[i][0], id);
                 }
-            } else window.location.reload();
+            } else if ('reload' in location) location.reload();
+            else {
+                // Web extension context
+                var ext = typeof chrome === 'undefined' ? typeof browser === 'undefined' ? null : browser : chrome;
+                if (ext && ext.runtime && ext.runtime.reload) ext.runtime.reload();
+            }
         }
         if (data.type === 'error') {
             // Log parcel errors to console
@@ -403,7 +415,7 @@ function reloadCSS() {
             var href = links[i].getAttribute('href');
             var hostname = getHostname();
             var servedFromHMRServer = hostname === 'localhost' ? new RegExp('^(https?:\\/\\/(0.0.0.0|127.0.0.1)|localhost):' + getPort()).test(href) : href.indexOf(hostname + ':' + getPort());
-            var absolute = /^https?:\/\//i.test(href) && href.indexOf(window.location.origin) !== 0 && !servedFromHMRServer;
+            var absolute = /^https?:\/\//i.test(href) && href.indexOf(location.origin) !== 0 && !servedFromHMRServer;
             if (!absolute) updateLink(links[i]);
         }
         cssTimeout = null;
@@ -588,6 +600,8 @@ const init = ()=>{
         maxlength: 4
     }));
     _redom.mount(body, _redom.el('.form-container', fieldName, fieldCardNumber, fieldExpirationDate, fieldSecurityCode));
+    const validateBlock = _redom.el('.validate-wrapper', _redom.el('.validate-button-wrapper', _redom.el('button#validate-button', 'Validate')), _redom.el('.validate-result', _redom.el('h2#validate-result-text')));
+    _redom.mount(body, validateBlock);
 };
 
 },{"redom":"iahd6","./svgImage.js":"6KPoF","@parcel/transformer-js/src/esmodule-helpers.js":"cxhdc"}],"iahd6":[function(require,module,exports) {
@@ -1234,6 +1248,7 @@ var _scriptJs = require("../script.js");
 var _maskDataJs = require("./maskData.js");
 var _inputmask = require("inputmask");
 var _inputmaskDefault = parcelHelpers.interopDefault(_inputmask);
+var _validateJs = require("./validate.js");
 const renderSvgIcon = (innerSvg)=>{
     return `<svg id="ccicon" class="ccicon" width="750" height="471" viewBox="0 0 750 471" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   ${innerSvg}
@@ -1297,9 +1312,17 @@ const eventListeners = ()=>{
     container.addEventListener('click', ({ target  })=>{
         if (target.closest('.creditcard') === container.querySelector('.creditcard')) container.querySelector('.creditcard').classList.toggle('flipped');
     });
+    /* validate button */ document.querySelector('#validate-button').addEventListener('click', (e)=>{
+        _validateJs.validateFormMainFunc('validate-result', 'validate-result-text', {
+            name: _scriptJs.name,
+            cardnumber: _scriptJs.cardnumber,
+            expirationdate: _scriptJs.expirationdate,
+            securitycode: _scriptJs.securitycode
+        });
+    });
 };
 
-},{"../script.js":"6rimH","./maskData.js":"aFO7T","inputmask":"gyYno","@parcel/transformer-js/src/esmodule-helpers.js":"cxhdc"}],"aFO7T":[function(require,module,exports) {
+},{"../script.js":"6rimH","./maskData.js":"aFO7T","inputmask":"gyYno","./validate.js":"cIClZ","@parcel/transformer-js/src/esmodule-helpers.js":"cxhdc"}],"aFO7T":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "mask", ()=>mask
@@ -1514,7 +1537,7 @@ const mask = [
                     importDataAttributes: !0,
                     shiftPositions: !0,
                     usePrototypeDefinitions: !0,
-                    validationEventTimeOut: 3000,
+                    validationEventTimeOut: 3e3,
                     substitutes: {}
                 };
                 t2.default = r;
@@ -4553,6 +4576,46 @@ const mask = [
     }();
 });
 
-},{}]},["aeQIJ","6rimH"], "6rimH", "parcelRequire8646")
+},{}],"cIClZ":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "validationCardHolder", ()=>validationCardHolder
+);
+parcelHelpers.export(exports, "validationCardNumber", ()=>validationCardNumber
+);
+parcelHelpers.export(exports, "validationCardCvv", ()=>validationCardCvv
+);
+parcelHelpers.export(exports, "validateFormMainFunc", ()=>validateFormMainFunc
+);
+const validationCardHolder = (str)=>{
+    const cardNameRegexp = /^[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
+    return cardNameRegexp.test(str);
+};
+const validationCardNumber = (str)=>{
+    const cardNumberRegexp = /^\d{4}\s\d{4}\s\d{4}\s\d{4}$/;
+    return cardNumberRegexp.test(str);
+};
+const validationCardCvv = (str)=>{
+    const cardCvvRegexp = /^\d{3,4}$/;
+    return cardCvvRegexp.test(str);
+};
+const validateFormMainFunc = (validateTextWrapper, validateIdText, inputsObject)=>{
+    const validateWrapper = document.querySelector(`.${validateTextWrapper}`);
+    const validateText = document.querySelector(`#${validateIdText}`);
+    let { cardnumber , name , securitycode  } = inputsObject;
+    validateWrapper.style.opacity = 1;
+    if (validationCardHolder(name.value) && validationCardNumber(cardnumber.value) && validationCardCvv(securitycode.value)) {
+        validateText.textContent = 'Card is validate';
+        validateWrapper.style.backgroundColor = '#478a56';
+    } else {
+        validateText.textContent = 'Card is not validate';
+        validateWrapper.style.backgroundColor = '#ff8383';
+    }
+} // ! Т.к. я импортирую в тесты именно основную функцию, то создание новых внутри не имеет смысла. 
+ // ! нужно продумать, чтобы основная функция возвращала результат и можно было передавать только целевые параметры
+ // ? можно попробовать создать внешние функции с регулярками, которые будут возвращать значения и в тесты передать как объекты кнопок, так и объекты с регулярками
+;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"cxhdc"}]},["dJvvM","6rimH"], "6rimH", "parcelRequire8646")
 
 //# sourceMappingURL=index.8cfc62b9.js.map

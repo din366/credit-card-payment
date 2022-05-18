@@ -346,3 +346,49 @@ input {
   -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);
 }
+
+
+/* validate block */
+
+.validate-wrapper {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.validate-button-wrapper {
+  width: 100%;
+  text-align: center;
+}
+
+#validate-button {
+  padding: 12px 50px;
+  background-color: #616161;
+  border-radius: 7px;
+  font-size: 23px;
+  color: white;
+  border: 0;
+  transition: background-color 0.3s;
+  margin-bottom: 20px;
+}
+
+#validate-button:hover {
+  background-color: #7c7c7c;
+}
+
+#validate-button:active {
+  background-color: #505050;
+}
+
+.validate-result {
+  opacity: 0;
+  padding: 10px 100px;
+  width: 100%;
+  max-width: 650px;
+  text-align: center;
+  color: white;
+  border-radius: 10px;
+  transition: background-color 0.5s;
+}

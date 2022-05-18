@@ -33,4 +33,12 @@ export const init = () => {
   el('input', {id:'securitycode', type:'text', pattern:'[0-9]*', inputmode:'numeric',  maxlength:4}));
   
   mount(body, el('.form-container', fieldName, fieldCardNumber, fieldExpirationDate, fieldSecurityCode));
+
+  const validateBlock = el('.validate-wrapper',
+    el('.validate-button-wrapper',
+      el('button#validate-button', 'Validate')),
+    el('.validate-result',
+      el('h2#validate-result-text',)));
+
+  mount(body, validateBlock);
 };
