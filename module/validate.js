@@ -5,7 +5,11 @@ export const validationCardHolder = (str) => {
 
 export const validationCardNumber = (str) => {
   const cardNumberRegexp = /^\d{4}\s\d{4}\s\d{4}\s\d{4}$/;
-  return cardNumberRegexp.test(str);
+  const cardNumberRegexpAmericanExpress = /^\d{4}\s\d{6}\s\d{5}$/;
+  const cardNumberRegexpDiners = /^\d{4}\s\d{6}\s\d{4}$/;
+
+  return cardNumberRegexp.test(str) ||
+    cardNumberRegexpAmericanExpress.test(str) || cardNumberRegexpDiners.test(str);
 }
 
 export const validationCardCvv = (str) => {
@@ -16,12 +20,12 @@ export const validationCardCvv = (str) => {
 export const validateFormMainFunc = (validateTextWrapper, validateIdText, inputsObject) => {
   const validateWrapper = document.querySelector(`.${validateTextWrapper}`);
   const validateText = document.querySelector(`#${validateIdText}`);
-  let {cardnumber, name, securitycode} = inputsObject;
+  let { cardnumber, name, securitycode } = inputsObject;
 
   validateWrapper.style.opacity = 1;
   if (validationCardHolder(name.value) &&
-      validationCardNumber(cardnumber.value) &&
-      validationCardCvv(securitycode.value)) {
+    validationCardNumber(cardnumber.value) &&
+    validationCardCvv(securitycode.value)) {
     validateText.textContent = 'Card is validate';
     validateWrapper.style.backgroundColor = '#478a56';
   } else {
@@ -29,7 +33,3 @@ export const validateFormMainFunc = (validateTextWrapper, validateIdText, inputs
     validateWrapper.style.backgroundColor = '#ff8383';
   }
 }
-
-// ! Т.к. я импортирую в тесты именно основную функцию, то создание новых внутри не имеет смысла. 
-// ! нужно продумать, чтобы основная функция возвращала результат и можно было передавать только целевые параметры
-// ? можно попробовать создать внешние функции с регулярками, которые будут возвращать значения и в тесты передать как объекты кнопок, так и объекты с регулярками

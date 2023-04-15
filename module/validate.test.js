@@ -1,19 +1,21 @@
-import { 
+import {
   validationCardHolder,
   validationCardNumber,
   validationCardCvv
 } from "./validate.js";
 
 describe('Проверка валидации кредитной карты', () => {
+
+
   it('Проверка имени отрабатывает корректно', () => {
     expect(validationCardHolder('Nikolay Petrov')).toBe(true);
   })
 
   it('Проверка имени с неправильными именами отрабатывает корректно', () => {
-    expect(validationCardHolder('Nikolay')).toBe(false);  
-    expect(validationCardHolder('12345')).toBe(false);  
-    expect(validationCardHolder('Николай')).toBe(false);  
-    expect(validationCardHolder('Nikolay Alexandrovich Petrov')).toBe(false);  
+    expect(validationCardHolder('Nikolay')).toBe(false);
+    expect(validationCardHolder('12345')).toBe(false);
+    expect(validationCardHolder('Николай')).toBe(false);
+    expect(validationCardHolder('Nikolay Alexandrovich Petrov')).toBe(false);
   })
 
   it('Проверка номера карты отрабатывает корректно', () => {
